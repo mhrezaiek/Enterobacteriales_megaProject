@@ -16,10 +16,15 @@ def genome_id_creator(path):
 
 ### for this function, all non-folder files should be moved from the directory
 def snp_collector(input, output):
-    input_file = output
     output_path = output
     files = os.listdir()
+    genome_id_creator()
     for f in files:
-        path = f + "snps.csv"
-        order = "cp " + f + path
+        path = f + "/snps.csv"
+        order = "cp " + path + " ../SNPs/"
         os.system()
+
+
+if __name__ == "__main__":
+    genome_id = genome_id_creator("Escherichia_just_gene_numbers_unique.csv")
+    print(genome_id[1][1])
