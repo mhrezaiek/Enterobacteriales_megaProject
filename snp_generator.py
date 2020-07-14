@@ -5,34 +5,36 @@ import csv
 
 
 
-#file = pd.read_csv("Escherichia_just_gene_numbers.csv")
 
 
-
-genome_id = []
-with open('Escherichia_just_gene_numbers_unique.csv') as csvfile:
+def genome_id_creator(path):
+    gene_list = path
+    genome_id = []
+    with open(gene_list) as csvfile:
         readCSV = csv.reader(csvfile, delimiter=',')
         for row in readCSV:
             genome_id.append(row)
+    return genome_id
 
 
 
+def snp_generator(input, output, reference, isolate_list_path):
+    genome_id = genome_id_creator(isolate_list_path)
+    for i in range(len(genome_id)):
+        try:
+            reference = reference
+            output = output + str(genome_id[i + 1][1])
+            ctgs = input + str(genome_id[i + 1][1]) + ".fna"
 
-#len(genome_id)
-
-counter =0 
-for i in range(len(genome_id)):
-            try:    
-                output = "../Escherichia/" + "add" + str(genome_id[i+1][1])
-                ctgs = "../Ecoli_added_seq/"  + str(genome_id[i+1][1]) + ".fna"
-
-                order = "snippy --outdir " + output + " --ref CP028307.1[1..4709905].fa --ctgs " + ctgs 
-                os.system(order)
-                if (i%5 == 0):
-                    print(i, flush=True)
-                print(order)    
-
-            except:
-                print("No such file id: "+str(genome_id[i+1]) )
+            order = "snippy --outdir " + output + " --ref " + reference +" --ctgs " + ctgs
+            os.system(order)
+            if (i % 5 == 0):
+                print(i, flush=True)
+            print(order)
+        except:
+            print("No such file id: " + str(genome_id[i + 1]))
 
 
+
+if __name__ == "__main__":
+    snp_generator()
