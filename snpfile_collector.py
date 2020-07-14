@@ -21,7 +21,7 @@ def snp_collector(input,output,gene_name_path):
     for f in files:
         if f != ".DS_Store":
             path = input + f + "/snps.csv"
-            target_csv_name = str(genome_id[int(f)+1][1]) + ".csv"
+            target_csv_name = str(genome_id[int(f)+1][1]) + "_table.csv"
             order = "cp " + path + " " + output_path + target_csv_name
             os.system(order)
 

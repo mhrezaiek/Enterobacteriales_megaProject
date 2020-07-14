@@ -18,7 +18,7 @@ finalPos = []
 def getFileNames():
     for i in range(0, len(folderContent)):
         if folderContent[i].__contains__("_table.csv"):
-            id.append(folderContent[i][6:len(folderContent[i]) - 10])  # - 11])
+            id.append(folderContent[i][6:len(folderContent[i]) - 10])
 
 
 # From: "https://www.geeksforgeeks.org/python-program-for-binary-search/"
