@@ -18,11 +18,12 @@ def Label_creator(raw_table_path,Isolates_table_path):
     isolates_table = genome_id_creator(Isolates_table_path)
     raw_table = genome_id_creator(raw_table_path)
     drugs = ["amoxicillin", "ampicillin", "aztreonam", "cefepime", "cefotaxime", "cefoxitin","ceftazidime", "cefuroxime",
-                     "ciprofloxacin","gentamicin", "piperacillin","tobramycin", "trimethoprim"]
+                     "ciprofloxacin","gentamicin", "piperacillin","tobramycin", "trimethoprim","tigecycline","imipenem",
+                     "meropenem","amikacin","ertapenem","ceftriaxone","tetracycline","cefalotin"]
 
     for i in range(len(isolates_table)-1):
         phenotype = ""
-        measurement_value = 0
+        measurement_value = ""
         gene_id = isolates_table[i + 1][0]
         antibiotic = str(isolates_table[i+1][3])
         print(str(i) + str(gene_id) + str(antibiotic))
@@ -42,43 +43,13 @@ def Label_creator(raw_table_path,Isolates_table_path):
                 for drug in range(len(drugs)):
                     if antibiotic == drugs[drug]:
                         raw_table[gene][drug+1] = phenotype
-                        raw_table[gene][drug+1+13] = measurement_value
+                        raw_table[gene][drug+1+21] = measurement_value
     dataset = pd.DataFrame(raw_table)
-    dataset.to_csv("test.csv", index=False)
+    dataset.to_csv("test1.csv", index=False)
 
 
 if __name__ == "__main__":
-    Label_creator("raw_dataset.csv", "Escherichia_isolates.csv")
+    Label_creator("raw_dataset_1.csv", "Escherichia_isolates.csv")
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-df = pd.read_csv("Escherichia_isolates.csv")
-dum_df = pd.get_dummies(df, columns=["antibiotic"], prefix=["res"])
-dum_df.head()
