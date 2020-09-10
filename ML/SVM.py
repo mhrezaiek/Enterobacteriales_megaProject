@@ -52,7 +52,7 @@ for drug in drugs:
     merged = dataset.merge(lable, left_on=['id'] , right_on=lable['genome_id'], how='right')
     merged = pd.DataFrame(merged)
     merged = merged.dropna()
-    dataset = np.asmatrix(merged.iloc[0:,0:merged.shape[1]-2])
+    dataset = np.asmatrix(merged.iloc[0:,0:merged.shape[1]-3])
     dataset = np.asarray(dataset)
     y = np.asmatrix(merged.iloc[0:,merged.shape[1]-2])
     y = np.asarray(y, dtype=np.float)
