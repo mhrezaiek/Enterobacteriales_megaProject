@@ -1,6 +1,6 @@
 import keras
 import tensorflow as tf
-from tensorflow.keras.layers import Input, Dense, Conv1D
+from tensorflow.keras.layers import Input, Dense, Add, concatenate, Conv1D
 from tensorflow.keras.models import Model
 import pandas as pd
 import numpy as np
@@ -25,14 +25,14 @@ def genome_id_creator(path):
             genome_id.append(row)
     return genome_id
 def model(input_shape, Nlayer):
-    n = 2000
+    n = 512
     input1 = Input(shape=(input_shape,))
-    x = Dense(1000, kernel_initializer=RandomUniform(), bias_initializer=TruncatedNormal(), activation='relu' )(input1)
+    x = Conv1D(512,strides=2, kernel_initializer=RandomUniform(), bias_initializer=TruncatedNormal(), activation='relu' )(input1)
     for i in range(Nlayer):
         n = int(n / 2)
-        x =Dense(n, kernel_initializer=RandomUniform(), bias_initializer=TruncatedNormal(), activation='relu')(x)
+        x =Conv1D(n, kernel_initializer=RandomUniform(), bias_initializer=TruncatedNormal(), activation='relu')(x)
         x = tf.keras.layers.Dropout(.2)(x)
-
+    x = Dense(50, kernel_initializer=RandomUniform(), bias_initializer=TruncatedNormal(), activation='relu')(x)
     out = tf.keras.layers.Dense(17, kernel_initializer = RandomUniform(), bias_initializer = TruncatedNormal(), activation = 'sigmoid')(x)
 
     model = tf.keras.models.Model(inputs=input1, outputs=out)
@@ -65,6 +65,7 @@ def plot(drugs, method_name):
 
     plt.savefig(plot_name)
     plt.close()
+
 print("commencing", flush = True)
 drugs = ["amikacin","Amoxicillin","Ampicillin","Aztreonam","cefalotin","Cefepime","Cefotaxime","Cefoxitin","Ceftazidime","ceftriaxone","Cefuroxime","Ciprofloxacin","ertapenem", "Gentamicin", "imipenem", "meropenem", "tetracycline"]
 
@@ -96,19 +97,22 @@ print("Done" , flush = True)
 y_score = nn.predict(X_test).ravel()
 y_score = np.reshape(y_score, (-1,17))
 
-for i in range(0,17):
-    for j in range(y_score.shape[0]):
-        if y_test[j,i] == -1:
-            y_test[j, i] = 0
-            y_score[j,i] = 0
 
 
 
 
 for i in range(17):
-    fpr1, tpr1, _ = roc_curve(y_test[0:,i], y_score[0:,i])
+    temp_y_test = []
+    temp_y_score = []
+    for j in range(y_score.shape[0]):
+        if  y_test[j,i] != -1:
+            temp_y_test.append(y_test[j,i])
+            temp_y_score.append(y_score[j,i])
+
+
+    fpr1, tpr1, _ = roc_curve(temp_y_test, temp_y_score)
     roc_aucc = auc(fpr1, tpr1)
     fpr.append(fpr1)
     tpr.append(tpr1)
     roc_auc.append(roc_aucc)
-plot(drugs, "Feedf")
+plot(drugs, "CNN")

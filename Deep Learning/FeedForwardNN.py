@@ -13,7 +13,7 @@ from keras.utils import to_categorical
 import keras.backend as K
 from keras.initializers import RandomUniform, TruncatedNormal
 import matplotlib as mpl
-#mpl.use('Agg')
+mpl.use('Agg')
 import matplotlib . pyplot as plt
 import gc
 from sklearn.metrics import auc
