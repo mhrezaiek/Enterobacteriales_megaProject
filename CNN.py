@@ -9,7 +9,7 @@ from sklearn.model_selection import train_test_split
 import keras.backend as K
 from keras.initializers import RandomUniform, TruncatedNormal
 import matplotlib
-matplotlib.use('Agg')
+#matplotlib.use('Agg')
 import matplotlib. pyplot as plt
 import gc
 from sklearn.metrics import auc
@@ -25,13 +25,15 @@ def genome_id_creator(path):
             genome_id.append(row)
     return genome_id
 def model(input_shape, Nlayer):
-    n = 512
+    n = 100
     input1 = Input(shape=(input_shape,))
-    x = Conv1D(512,strides=2, kernel_initializer=RandomUniform(), bias_initializer=TruncatedNormal(), activation='relu' )(input1)
+    x = Dense(100, kernel_initializer=RandomUniform(), bias_initializer=TruncatedNormal(), activation='relu' )(input1)
+    x = tf.keras.layers.Reshape([100, 1])(x)
     for i in range(Nlayer):
         n = int(n / 2)
-        x =Conv1D(n, kernel_initializer=RandomUniform(), bias_initializer=TruncatedNormal(), activation='relu')(x)
+        x =Conv1D(n,strides=2,kernel_size=2,padding='same', kernel_initializer=RandomUniform(), bias_initializer=TruncatedNormal(), activation='relu')(x)
         x = tf.keras.layers.Dropout(.2)(x)
+    x = tf.keras.layers.Flatten()(x)
     x = Dense(50, kernel_initializer=RandomUniform(), bias_initializer=TruncatedNormal(), activation='relu')(x)
     out = tf.keras.layers.Dense(17, kernel_initializer = RandomUniform(), bias_initializer = TruncatedNormal(), activation = 'sigmoid')(x)
 
@@ -77,9 +79,11 @@ data = genome_id_creator("../../../Desktop/sample.csv")
 data = pd.DataFrame(data[1:],columns=data[0] )
 
 gc.collect()
-dataset = np.asmatrix(data.iloc[0:,2:378969])
+#dataset = np.asmatrix(data.iloc[0:,2:378969])
+dataset = np.asmatrix(data.iloc[0:,3:6])
 dataset = np.asarray(dataset)
-y = np.asmatrix(data.iloc[,378971:])
+dataset = np.reshape(dataset, (-1,3,1))
+y = np.asmatrix(data.iloc[0:,6:])
 
 y = np.asarray(y, dtype=np.float)
 y = np.reshape(y, (2020, 17))
@@ -87,7 +91,7 @@ dataset , y = dataset.astype(float), y.astype(float)
 
 X_train, X_test, y_train, y_test = train_test_split(dataset, y, test_size=0.3, random_state=23)
 
-nn = model(378967,6)
+nn = model((3,1),1)
 Adam = tf.keras.optimizers.Adam(learning_rate=0.001)
 nn.compile(loss=masked_loss_function, optimizer=Adam, metrics=[masked_accuracy])
 print('model complied',flush = True)
