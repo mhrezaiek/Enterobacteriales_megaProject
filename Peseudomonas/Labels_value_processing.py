@@ -22,39 +22,46 @@ def value_convertor(lable_table_path):
         if i ==0:
             continue
         else:
-            if dataset[i][2] != "" and float(dataset[i][2])!=-2:
+            if dataset[i][2] != "" and float(dataset[i][2])!=-2 and float(dataset[i][2]) == -2:
                 if float(dataset[i][2]) <=8and float(dataset[i][2])>0 and dataset[0][1] == "amoxicillin" :
                     dataset[i][1] = 0
                 elif float(dataset[i][2]) <=8and float(dataset[i][2])>0 and dataset[0][1] == "ampicillin" :
                     dataset[i][1] = 0
                 elif float(dataset[i][2]) <=8and float(dataset[i][2])>0 and dataset[0][1] == "aztreonam" :
                     dataset[i][1] = 0
-                elif float(dataset[i][2]) <=4and float(dataset[i][2])>0 and dataset[0][1] == "cefepime" :
+                elif float(dataset[i][2]) <=0.001and float(dataset[i][2])>0 and dataset[0][1] == "aztreonam" :
                     dataset[i][1] = 0
-                elif float(dataset[i][2]) <=1and float(dataset[i][2])>0 and dataset[0][1] == "cefepime" :
+                elif float(dataset[i][2]) >=16  and dataset[0][1] == "aztreonam" :
+                    dataset[i][1] = 1
+
+                elif float(dataset[i][2]) <=0.001and float(dataset[i][2])>0 and dataset[0][1] == "cefepime" :
                     dataset[i][1] = 0
-                elif float(dataset[i][2]) >=2  and dataset[0][1] == "cefepime" :
+                elif float(dataset[i][2]) >=8  and dataset[0][1] == "cefepime" :
                     dataset[i][1] = 1
                 elif float(dataset[i][2]) <=8and float(dataset[i][2])>0 and dataset[0][1] == "cefoxitin" :
                     dataset[i][1] = 0
                 elif float(dataset[i][2]) >=32  and dataset[0][1] == "cefoxitin" :
                     dataset[i][1] = 1
-                elif float(dataset[i][2]) <=1 and float(dataset[i][2])>0 and dataset[0][1] == "ceftazidime" :
+                elif float(dataset[i][2]) <=0.001 and float(dataset[i][2])>0 and dataset[0][1] == "ceftazidime" :
                     dataset[i][1] = 0
-                elif float(dataset[i][2]) >4  and dataset[0][1] == "ceftazidime" :
+                elif float(dataset[i][2]) >8  and dataset[0][1] == "ceftazidime" :
                     dataset[i][1] = 1
                 elif float(dataset[i][2]) <=0.001 and float(dataset[i][2])>0 and dataset[0][1] == "cefuroxime" :
                     dataset[i][1] = 0
                 elif float(dataset[i][2]) >8  and dataset[0][1] == "cefuroxime" :
                     dataset[i][1] = 1
-                elif float(dataset[i][2]) <=0.25 and float(dataset[i][2])>0 and dataset[0][1] == "ciprofloxacin" :
+                elif float(dataset[i][2]) <=0.001 and float(dataset[i][2])>0 and dataset[0][1] == "ciprofloxacin" :
                     dataset[i][1] = 0
                 elif float(dataset[i][2]) >0.5  and dataset[0][1] == "ciprofloxacin" :
                     dataset[i][1] = 1
-
-                elif float(dataset[i][2]) <=2 and float(dataset[i][2])>0 and dataset[0][1] == "gentamicin" :
+                elif float(dataset[i][2]) <=2 and float(dataset[i][2])>0 and dataset[0][1] == "colistin" :
                     dataset[i][1] = 0
-                elif float(dataset[i][2]) >2  and dataset[0][1] == "gentamicin" :
+                elif float(dataset[i][2]) >2  and dataset[0][1] == "colistin" :
+                    dataset[i][1] = 1
+
+                elif float(dataset[i][2]) <=0.25 and float(dataset[i][2])>0 and dataset[0][1] == "gentamicin" :
+                    dataset[i][1] = 0
+                elif float(dataset[i][2]) >8  and dataset[0][1] == "gentamicin" :
                     dataset[i][1] = 1
 
                 elif float(dataset[i][2]) <=8 and float(dataset[i][2])>0 and dataset[0][1] == "piperacillin" :
@@ -72,7 +79,7 @@ def value_convertor(lable_table_path):
                 elif float(dataset[i][2]) >0.5  and dataset[0][1] == "tigecycline" :
                     dataset[i][1] = 1
 
-                elif float(dataset[i][2]) <=2 and float(dataset[i][2])>0 and dataset[0][1] == "imipenem" :
+                elif float(dataset[i][2]) <=0.001 and float(dataset[i][2])>0 and dataset[0][1] == "imipenem" :
                     dataset[i][1] = 0
                 elif float(dataset[i][2]) >4  and dataset[0][1] == "imipenem" :
                     dataset[i][1] = 1
@@ -82,9 +89,13 @@ def value_convertor(lable_table_path):
                 elif float(dataset[i][2]) >8  and dataset[0][1] == "meropenem" :
                     dataset[i][1] = 1
 
-                elif float(dataset[i][2]) <=8 and float(dataset[i][2])>0 and dataset[0][1] == "amikacin" :
+                elif float(dataset[i][2]) <=16 and float(dataset[i][2])>0 and dataset[0][1] == "amikacin" :
                     dataset[i][1] = 0
-                elif float(dataset[i][2]) >8  and dataset[0][1] == "amikacin" :
+                elif float(dataset[i][2]) >16  and dataset[0][1] == "amikacin" :
+                    dataset[i][1] = 1
+                elif float(dataset[i][2]) <=0.001 and float(dataset[i][2])>0 and dataset[0][1] == "levofloxacin" :
+                    dataset[i][1] = 0
+                elif float(dataset[i][2]) >1  and dataset[0][1] == "levofloxacin" :
                     dataset[i][1] = 1
 
                 elif float(dataset[i][2]) <=0.5 and float(dataset[i][2])>0 and dataset[0][1] == "ertapenem" :
@@ -92,9 +103,9 @@ def value_convertor(lable_table_path):
                 elif float(dataset[i][2]) >0.5  and dataset[0][1] == "ertapenem" :
                     dataset[i][1] = 1
 
-                elif float(dataset[i][2]) <=1 and float(dataset[i][2])>0 and dataset[0][1] == "ceftriaxone" :
+                elif float(dataset[i][2]) <=0.001 and float(dataset[i][2])>0 and dataset[0][1] == "piperacillin" :
                     dataset[i][1] = 0
-                elif float(dataset[i][2]) >2  and dataset[0][1] == "ceftriaxone" :
+                elif float(dataset[i][2]) >16  and dataset[0][1] == "piperacillin" :
                     dataset[i][1] = 1
 
                 elif float(dataset[i][2]) <=0.5 and float(dataset[i][2])>0 and dataset[0][1] == "tetracycline" :
@@ -113,8 +124,8 @@ def value_convertor(lable_table_path):
 
     final_dataset = pd.DataFrame(dataset)
 
-    final_dataset.to_csv("datasets_perdrug/trimethoprim_final.csv", index=False, header=False)
+    final_dataset.to_csv("datasets/Perdrug/aztreonam_final.csv", index=False, header=False)
 
 if __name__ == "__main__":
-    value_convertor("datasets_perdrug/trimethoprim.csv")
+    value_convertor("datasets/Perdrug/aztreonam11.csv")
 
